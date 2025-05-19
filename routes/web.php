@@ -9,4 +9,3 @@ Route::get('/', function () {
 Route::get('/upload', [App\Http\Controllers\SaleController::class,'index']);
 
 Route::post('/upload',[App\Http\Controllers\SaleController::class,'upload']);
-Route::post('/store-data',[App\Http\Controllers\SaleController::class,'store']);
