@@ -20,6 +20,27 @@
         @endif
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+    <div class="col-md-4">
+        <label class="required" for="timezone">{{ __('TimeZone') }}</label>
+        <select class="form-control" name="timezone" id="timezone">
+            @foreach(Helpers::getTimeZoneList() as $timezone => $timezone_gmt_diff)
+                <option value="{{ $timezone }}" {{ ( $timezone === old('timezone', $user->timezone)) ? 'selected' : '' }}>
+                    {{ $timezone_gmt_diff }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    {{ now( \Auth::user()->timezone ) }} - {{ now( Helpers::getUserTimeZone() ) }}
+
+    {{ Carbon::parse( $model->timestamp_field )->setTimezone( Helpers::getUserTimeZone() ) }}
+    // user-defined-timezones
+    <x-date-time-zone :date="$model->created_at" />
+
+    <x-date-time-zone :date="$model->created_at" format="d-m-Y H:i:s" />
+
+    <x-date-time-zone :date="$model->created_at" format="d/m/Y<\b\r>H:i" />
+
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
             <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
